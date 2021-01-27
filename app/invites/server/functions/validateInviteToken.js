@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Invites, Rooms } from '../../../models';
 
 export const validateInviteToken = (token) => {
-	if (!token || typeof token !== 'string') {
+	if (!token) {
 		throw new Meteor.Error('error-invalid-token', 'The invite token is invalid.', { method: 'validateInviteToken', field: 'token' });
 	}
 
