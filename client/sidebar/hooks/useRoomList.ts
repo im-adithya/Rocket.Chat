@@ -35,7 +35,7 @@ export const useRoomList = (): Array<ISubscription> => {
 			const conversation = new Set();
 
 			rooms.forEach((room) => {
-				if (typeof room.archived !== 'undefined' && room.archived) {
+				if (room.archived) {
 					return;
 				}
 
