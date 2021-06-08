@@ -51,7 +51,7 @@
 		"@babel/plugin-proposal-optional-chaining": "^7.11.0",
 		"@babel/preset-env": "^7.11.0",
 		"@babel/preset-react": "^7.10.4",
-		"@babel/register": "^7.12.1",
+		"@babel/register": "^7.13.16",
 		"@rocket.chat/eslint-config": "^0.3.0",
 		"@rocket.chat/icons": "^0.26.0",
 		"@rocket.chat/livechat": "^1.9.3",
