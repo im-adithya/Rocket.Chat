@@ -7,8 +7,9 @@ import {
 	Icon,
 	Field,
 	ToggleSwitch,
+	PaginatedMultiSelectFiltered,
 } from '@rocket.chat/fuselage';
-import { useDebouncedCallback } from '@rocket.chat/fuselage-hooks';
+import { useDebouncedCallback, useDebouncedValue } from '@rocket.chat/fuselage-hooks';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import UserAutoCompleteMultiple from '../../../ee/client/audit/UserAutoCompleteMultiple';
@@ -21,6 +22,7 @@ const CreateChannel = ({
 	handlers,
 	hasUnsavedChanges,
 	onChangeUsers,
+	onChangeTags,
 	onChangeType,
 	onChangeBroadcast,
 	canOnlyCreateOneType,
@@ -37,6 +39,7 @@ const CreateChannel = ({
 	const channelNameRegex = useMemo(() => new RegExp(`^${namesValidation}$`), [namesValidation]);
 
 	const [nameError, setNameError] = useState();
+	const [tagsFilter, setTagsFilter] = useState('');
 
 	const checkName = useDebouncedCallback(
 		async (name) => {
@@ -69,7 +72,7 @@ const CreateChannel = ({
 	);
 
 	const canSave = useMemo(() => hasUnsavedChanges && !nameError, [hasUnsavedChanges, nameError]);
-
+	console.log(values.tags);
 	return (
 		<Modal>
 			<Modal.Header>
@@ -162,6 +165,31 @@ const CreateChannel = ({
 				<Field mbe='x24'>
 					<Field.Label>{`${t('Add_members')} (${t('optional')})`}</Field.Label>
 					<UserAutoCompleteMultiple value={values.users} onChange={onChangeUsers} />
+				</Field>
+				<Field mbe='x24'>
+					<Field.Label>{`${t('Add Tags')} (${t('optional')})`}</Field.Label>
+					<PaginatedMultiSelectFiltered
+						filter={tagsFilter}
+						setFilter={setTagsFilter}
+						options={[
+							{
+								value: 'cooking',
+								label: 'cooking',
+							},
+							{
+								value: 'sports',
+								label: 'sports',
+							},
+							{
+								value: 'action',
+								label: 'action',
+							},
+						]}
+						value={values.tags}
+						maxWidth='100%'
+						placeholder={t('Select_an_option')}
+						onChange={onChangeTags}
+					/>
 				</Field>
 			</Modal.Content>
 			<Modal.Footer>

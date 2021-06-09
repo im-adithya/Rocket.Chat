@@ -32,11 +32,19 @@ const CreateChannelWithData = ({ onClose, teamId = '', reload }) => {
 		readOnly: false,
 		encrypted: e2eEnabledForPrivateByDefault ?? false,
 		broadcast: false,
+		tags: [],
 	};
 	const { values, handlers, hasUnsavedChanges } = useForm(initialValues);
 
-	const { users, name, description, type, readOnly, broadcast, encrypted } = values;
-	const { handleUsers, handleEncrypted, handleType, handleBroadcast, handleReadOnly } = handlers;
+	const { users, name, description, type, readOnly, broadcast, encrypted, tags } = values;
+	const {
+		handleUsers,
+		handleEncrypted,
+		handleType,
+		handleBroadcast,
+		handleReadOnly,
+		handleTags,
+	} = handlers;
 
 	const onChangeUsers = useMutableCallback((value, action) => {
 		if (!action) {
@@ -45,11 +53,13 @@ const CreateChannelWithData = ({ onClose, teamId = '', reload }) => {
 			}
 			return handleUsers([...users, value]);
 		}
+		console.log(value, action, 'users');
 		handleUsers(users.filter((current) => current !== value));
 	});
 
 	const onChangeType = useMutableCallback((value) => {
 		handleEncrypted(!value);
+		console.log(value.target.checked, !value, 'priv or pub i think true is priv');
 		return handleType(value);
 	});
 
@@ -57,6 +67,17 @@ const CreateChannelWithData = ({ onClose, teamId = '', reload }) => {
 		handleEncrypted(!value);
 		handleReadOnly(value);
 		return handleBroadcast(value);
+	});
+
+	const onChangeTags = useMutableCallback((value, action) => {
+		console.log(tags, action, value);
+		if (!action) {
+			if (tags.includes(value)) {
+				console.log('hey', value);
+				return;
+			}
+			return handleTags(value);
+		}
 	});
 
 	const onCreate = useCallback(async () => {
@@ -108,6 +129,7 @@ const CreateChannelWithData = ({ onClose, teamId = '', reload }) => {
 			handlers={handlers}
 			hasUnsavedChanges={hasUnsavedChanges}
 			onChangeUsers={onChangeUsers}
+			onChangeTags={onChangeTags}
 			onChangeType={onChangeType}
 			onChangeBroadcast={onChangeBroadcast}
 			canOnlyCreateOneType={canOnlyCreateOneType}
