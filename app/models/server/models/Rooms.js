@@ -1088,6 +1088,18 @@ export class Rooms extends Base {
 		return this.update(query, update);
 	}
 
+	setTagsById(_id, tags) {
+		const query = { _id };
+
+		const update = {
+			$set: {
+				tags,
+			},
+		};
+
+		return this.update(query, update);
+	}
+
 	setAnnouncementById(_id, announcement, announcementDetails) {
 		const query = { _id };
 
