@@ -88,7 +88,7 @@
 		"babel-mocha-es6-compiler": "^0.1.0",
 		"babel-plugin-array-includes": "^2.0.3",
 		"babel-polyfill": "^6.26.0",
-		"chai": "^4.2.0",
+		"chai": "^4.3.4",
 		"chai-datetime": "^1.7.0",
 		"chai-spies": "^1.0.0",
 		"cross-env": "^7.0.3",
